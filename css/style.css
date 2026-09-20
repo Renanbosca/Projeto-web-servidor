@@ -1,0 +1,114 @@
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #f4f4f9; 
+}
+
+/* Container Principal do Sistema */
+.container { 
+    max-width: 1000px; 
+    margin: 20px auto; 
+    padding: 20px; 
+    background: white; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+}
+
+/* Menu de Navegação */
+.menu { 
+    background: #0055a4; 
+    padding: 15px; 
+    color: white; 
+    display: flex; 
+    gap: 20px; 
+}
+
+.menu a { 
+    color: white; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+
+/* Tabelas (Listagens) */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+}
+
+th, td { 
+    padding: 10px; 
+    border: 1px solid #ddd; 
+    text-align: left; 
+}
+
+th { 
+    background-color: #f8f9fa; 
+}
+
+/* Formulários */
+.form-group { 
+    margin-bottom: 15px; 
+}
+
+.form-group label { 
+    display: block; 
+    margin-bottom: 5px; 
+}
+
+.form-group input, 
+.form-group select { 
+    width: 100%; 
+    padding: 8px; 
+    box-sizing: border-box; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button { 
+    padding: 10px 15px; 
+    background: #0055a4; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    font-size: 14px;
+}
+
+button:hover {
+    background: #003d7a;
+}
+
+/* Mensagens de Erro */
+.erro { 
+    color: red; 
+    background: #fee; 
+    padding: 10px; 
+    margin-bottom: 15px; 
+    border-left: 4px solid red; 
+}
+
+
+.body-login {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+}
+
+.login-box { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    width: 300px; 
+}
+
+.login-box input, 
+.login-box button { 
+    width: 100%; 
+    padding: 10px; 
+    margin-top: 10px; 
+    box-sizing: border-box; 
+}
