@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "nome": "Ana Souza",
+        "email": "ana@email.com",
+        "telefone": "42999991111"
+    },
+    {
+        "id": 2,
+        "nome": "Bruno Lima",
+        "email": "bruno@email.com",
+        "telefone": "4232221234"
+    },
+    {
+        "id": 3,
+        "nome": "Carla Mendes",
+        "email": "carla@email.com",
+        "telefone": "42988887777"
+    },
+    {
+        "id": 4,
+        "nome": "renan",
+        "email": "renanhsbosca@gmail.com",
+        "telefone": "42999567738"
+    }
+]

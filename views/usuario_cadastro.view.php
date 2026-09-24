@@ -3,36 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar Conta - Biblioteca</title>
+    <title><?= e($titulo) ?></title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="body-login">
-    <div class="login-box" style="width: 350px;">
+    <div class="login-box login-box-largo">
         <h2>Criar Nova Conta</h2>
-        
-        <form action="cadastro_usuario.php" method="POST">
+
+        <?php if (isset($erros['geral'])): ?>
+            <div class="erro"><?= e($erros['geral']) ?></div>
+        <?php endif; ?>
+
+        <form action="cadastro_usuario.php" method="POST" novalidate>
             <div class="form-group">
-                <label>Nome Completo:</label>
-                <input type="text" name="nome" required>
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" value="<?= e($form['nome']) ?>" class="<?= classeErro($erros, 'nome') ?>">
+                <?= mensagemErro($erros, 'nome') ?>
             </div>
 
             <div class="form-group">
-                <label>E-mail / Usuário:</label>
-                <input type="email" name="email" required>
+                <label for="email">E-mail (usado no login):</label>
+                <input type="email" id="email" name="email" value="<?= e($form['email']) ?>" class="<?= classeErro($erros, 'email') ?>">
+                <?= mensagemErro($erros, 'email') ?>
             </div>
-            
+
             <div class="form-group">
-                <label>Senha:</label>
-                <input type="password" name="senha" required>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" class="<?= classeErro($erros, 'senha') ?>">
+                <span class="dica">Mínimo de 6 caracteres, com letras e números.</span>
+                <?= mensagemErro($erros, 'senha') ?>
             </div>
-            
+
+            <div class="form-group">
+                <label for="confirmar_senha">Confirmar Senha:</label>
+                <input type="password" id="confirmar_senha" name="confirmar_senha" class="<?= classeErro($erros, 'confirmar_senha') ?>">
+                <?= mensagemErro($erros, 'confirmar_senha') ?>
+            </div>
+
             <button type="submit">Cadastrar</button>
         </form>
 
-        <!-- Link para voltar ao login -->
-        <p style="text-align: center; margin-top: 15px; font-size: 14px;">
-            Já tem uma conta? <a href="index.php" style="color: #0055a4; text-decoration: none;">Fazer Login</a>
+        <p class="link-rodape">
+            Já tem uma conta? <a href="index.php">Fazer Login</a>
         </p>
-    </div>
-</body>
-</html>
+

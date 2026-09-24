@@ -1,5 +1,2 @@
-RewriteEngine on
-RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteCond %{SCRIPT_FILENAME} !-l
-RewriteRule ^(.*)$ index.php/$1
+
+RedirectMatch 403 ^.*/(views|models|includes|data|scripts)/

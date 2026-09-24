@@ -1,9 +1,88 @@
 <?php
-// livros.php (Controlador de Livros)
-$titulo = "Gerenciamento de Livros";
 
-// Variável vazia para simular a tabela por enquanto (sua dupla vai puxar do banco depois)
-$livros = []; 
+require_once 'includes/auth.php';
+require_once 'includes/funcoes.php';
+require_once 'models/livro.php';
+
+
+function validarLivro(array $form): array
+{
+    $erros = [];
+
+    if ($form['titulo'] === '') {
+        $erros['titulo'] = 'Informe o título do livro.';
+    } elseif (tamanhoTexto($form['titulo']) > 150) {
+        $erros['titulo'] = 'O título pode ter no máximo 150 caracteres.';
+    }
+
+    if ($form['autor'] === '') {
+        $erros['autor'] = 'Informe o autor.';
+    } elseif (tamanhoTexto($form['autor']) < 3) {
+        $erros['autor'] = 'O nome do autor deve ter pelo menos 3 caracteres.';
+    } elseif (tamanhoTexto($form['autor']) > 100) {
+        $erros['autor'] = 'O nome do autor pode ter no máximo 100 caracteres.';
+    }
+
+
+    $anoAtual = (int) date('Y');
+    $anoDigitado = (int) $form['ano'];
+
+    if ($form['ano'] === '') {
+        $erros['ano'] = 'Informe o ano de publicação.';
+    } elseif ($anoDigitado < 1450 || $anoDigitado > $anoAtual) {
+        $erros['ano'] = "O ano deve ser um número entre 1450 e $anoAtual.";
+    }
+
+    return $erros;
+}
+
+$titulo = 'Gerenciamento de Livros';
+$menuAtivo = 'livros';
+$acao = $_GET['acao'] ?? '';
+$erros = [];
+
+$form = ['id' => '', 'titulo' => '', 'autor' => '', 'ano' => ''];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
+    $form = [
+        'id'     => campoPost('id'),
+        'titulo' => campoPost('titulo'),
+        'autor'  => campoPost('autor'),
+        'ano'    => campoPost('ano'),
+    ];
+
+    $erros = validarLivro($form);
+
+    if (empty($erros)) {
+        try {
+            salvarLivro($form);
+            definirMensagem('sucesso', $form['id'] === '' ? 'Livro cadastrado com sucesso!' : 'Livro atualizado com sucesso!');
+            redirecionar('livros.php');
+        } catch (Exception $e) {
+            $erros['geral'] = $e->getMessage();
+        }
+    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'excluir') {
+    try {
+        excluirLivro((int) campoPost('id'));
+        definirMensagem('sucesso', 'Livro excluído com sucesso!');
+    } catch (Exception $e) {
+        definirMensagem('erro', $e->getMessage());
+    }
+    redirecionar('livros.php');
+} elseif ($acao === 'editar') {
+    $livro = buscarLivro((int) ($_GET['id'] ?? 0));
+
+    if ($livro === null) {
+        definirMensagem('erro', 'Livro não encontrado.');
+        redirecionar('livros.php');
+    }
+    $form = $livro;
+}
+
+$editando = !empty($form['id']);
+$livros = listarLivros();
+$mensagem = pegarMensagem();
 
 require 'views/cabecalho.view.php';
 require 'views/livros_cadastro.view.php';
