@@ -112,3 +112,197 @@ button:hover {
     margin-top: 10px; 
     box-sizing: border-box; 
 }
+
+/* ---------- Menu: página atual e usuário logado ---------- */
+.menu a.ativo {
+    border-bottom: 2px solid white;
+}
+
+.menu .usuario-logado {
+    margin-left: auto;
+    opacity: 0.85;
+}
+
+/* ---------- Mensagens de sucesso ---------- */
+.sucesso {
+    color: #1e6b2f;
+    background: #e8f6ec;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-left: 4px solid #2e9e4f;
+}
+
+/* ---------- Erros de validação em cada campo ---------- */
+.form-group input.invalido,
+.form-group select.invalido {
+    border-color: red;
+    background: #fff7f7;
+}
+
+.erro-campo {
+    display: block;
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.dica {
+    display: block;
+    color: #666;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* ---------- Botões secundários e pequenos ---------- */
+.botao-secundario {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-left: 8px;
+    color: #0055a4;
+    text-decoration: none;
+    border: 1px solid #0055a4;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.botao-pequeno {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 13px;
+    background: #0055a4;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.botao-pequeno.perigo {
+    background: #c0392b;
+}
+
+.botao-pequeno.perigo:hover {
+    background: #962d22;
+}
+
+/* ---------- Tabelas ---------- */
+.tabela-container {
+    overflow-x: auto;   /* rolagem lateral em telas pequenas */
+}
+
+td.acoes {
+    white-space: nowrap;
+}
+
+td.acoes form {
+    display: inline;
+}
+
+/* ---------- Etiquetas de situação ---------- */
+.etiqueta {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.etiqueta.disponivel { background: #e8f6ec; color: #1e6b2f; }
+.etiqueta.emprestado { background: #fff4e0; color: #8a5a00; }
+.etiqueta.atrasado   { background: #fdecea; color: #b3261e; }
+.etiqueta.devolvido  { background: #eef0f3; color: #555; }
+
+/* ---------- Filtros da lista de empréstimos ---------- */
+.filtros {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filtros a {
+    padding: 6px 12px;
+    border: 1px solid #0055a4;
+    border-radius: 16px;
+    color: #0055a4;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.filtros a.ativo {
+    background: #0055a4;
+    color: white;
+}
+
+/* ---------- Painel (cartões com totais) ---------- */
+.cartoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.cartao {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-left: 4px solid #0055a4;
+    border-radius: 6px;
+    color: #333;
+    text-decoration: none;
+}
+
+.cartao:hover {
+    background: #f8f9fa;
+}
+
+.cartao .numero {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0055a4;
+}
+
+.cartao .detalhe {
+    font-size: 13px;
+    color: #666;
+}
+
+.cartao-alerta {
+    border-left-color: #c0392b;
+}
+
+.cartao-alerta .numero {
+    color: #c0392b;
+}
+
+/* ---------- Telas de login e cadastro ---------- */
+.login-box-largo {
+    width: 350px;
+}
+
+.link-rodape {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.link-rodape a {
+    color: #0055a4;
+    text-decoration: none;
+}
+
+/* ---------- Telas pequenas (celular) ---------- */
+@media (max-width: 600px) {
+    .menu {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .login-box,
+    .login-box-largo {
+        width: 90%;
+    }
+}
