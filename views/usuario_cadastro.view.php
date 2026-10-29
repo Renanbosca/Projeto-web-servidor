@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" name="senha" class="<?= classeErro($erros, 'senha') ?>">
-                <span class="dica">Mínimo de 6 caracteres, com letras e números.</span>
+                <span class="dica">Mínimo de 6 caracteres.</span>
                 <?= mensagemErro($erros, 'senha') ?>
             </div>
 
