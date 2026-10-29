@@ -23,8 +23,8 @@ function validarLeitor(array $form): array
     } elseif (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
         $erros['email'] = 'Informe um e-mail válido (ex.: nome@dominio.com).';
     } else {
-        $outro = buscarLeitorPorEmail($form['email']);
-        if ($outro !== null && $outro['id'] !== (int) $form['id']) {
+        $outro = Leitor::buscarLeitorPorEmail($form['email']);
+        if ($outro !== null && $outro->getId() !== (int) $form['id']) {
             $erros['email'] = 'Já existe um leitor cadastrado com este e-mail.';
         }
     }
@@ -45,45 +45,56 @@ $acao = $_GET['acao'] ?? '';
 $erros = [];
 
 $form = ['id' => '', 'nome' => '', 'email' => '', 'telefone' => ''];
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
-    $form = [
-        'id'       => campoPost('id'),
-        'nome'     => campoPost('nome'),
-        'email'    => campoPost('email'),
-        'telefone' => campoPost('telefone'),
-    ];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
+        $form = [
+            'id'       => campoPost('id'),
+            'nome'     => campoPost('nome'),
+            'email'    => campoPost('email'),
+            'telefone' => campoPost('telefone'),
+        ];
 
-    $erros = validarLeitor($form);
-    if (empty($erros)) {
-        try {
-            salvarLeitor($form);
-            definirMensagem('sucesso', $form['id'] === '' ? 'Leitor cadastrado com sucesso!' : 'Leitor atualizado com sucesso!');
-            redirecionar('leitores.controllers.php');
-        } catch (Exception $e) {
-            $erros['geral'] = $e->getMessage();
+        $erros = validarLeitor($form);
+        if (empty($erros)) {
+            try {
+                $leitorObj = new Leitor();
+                if (!empty($form['id'])) { $leitorObj->setId($form['id']); }
+                $leitorObj->setNome($form['nome']);
+                $leitorObj->setEmail($form['email']);
+                $leitorObj->setTelefone($form['telefone']);
+                $leitorObj->salvar();
+                
+                definirMensagem('sucesso', $form['id'] === '' ? 'Leitor cadastrado com sucesso!' : 'Leitor atualizado com sucesso!');
+                redirecionar('leitores.controllers.php');
+            } catch (Exception $e) {
+                $erros['geral'] = "Erro na conexão com o banco de dados: " . $e->getMessage();
+            }
         }
-    }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'excluir') {
-    try {
-        excluirLeitor((int) campoPost('id'));
-        definirMensagem('sucesso', 'Leitor excluído com sucesso!');
-    } catch (Exception $e) {
-        definirMensagem('erro', $e->getMessage());
-    }
-    redirecionar('leitores.controllers.php');
-} elseif ($acao === 'editar') {
-    $leitor = buscarLeitor((int) ($_GET['id'] ?? 0));
-
-    if ($leitor === null) {
-        definirMensagem('erro', 'Leitor não encontrado.');
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'excluir') {
+        try {
+            Leitor::excluir((int) campoPost('id'));
+            definirMensagem('sucesso', 'Leitor excluído com sucesso!');
+        } catch (Exception $e) {
+            definirMensagem('erro', "Não é possível excluir: o leitor tem empréstimos ativos.");
+        }
         redirecionar('leitores.controllers.php');
+    } elseif ($acao === 'editar') {
+        $leitorObj = Leitor::buscarPorId((int) ($_GET['id'] ?? 0));
+
+        if ($leitorObj === null) {
+            definirMensagem('erro', 'Leitor não encontrado.');
+            redirecionar('leitores.controllers.php');
+        }
+        
+        $form = [
+            'id' => $leitorObj->getId(),
+            'nome' => $leitorObj->getNome(),
+            'email' => $leitorObj->getEmail(),
+            'telefone' => formatarTelefone($leitorObj->getTelefone()) 
+        ];
     }
-    $form = $leitor;
-    $form['telefone'] = formatarTelefone($leitor['telefone']);
-}
 
 $editando = !empty($form['id']);
-$leitores = listarLeitores();
+$leitores = Leitor::listarTodos();
 $mensagem = pegarMensagem();
 
 require __DIR__ . '/../views/cabecalho.view.php';

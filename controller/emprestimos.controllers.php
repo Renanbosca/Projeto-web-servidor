@@ -11,26 +11,26 @@ function validarEmprestimo(array $form): array
 
     if ($form['livro_id'] === '') {
         $erros['livro_id'] = 'Selecione um livro.';
-    } elseif (filter_var($form['livro_id'], FILTER_VALIDATE_INT) === false || buscarLivro((int) $form['livro_id']) === null) {
+    } elseif (filter_var($form['livro_id'], FILTER_VALIDATE_INT) === false || Livro::buscarPorId((int) $form['livro_id']) === null) {
         $erros['livro_id'] = 'Livro inválido.';
     }
 
     if ($form['leitor_id'] === '') {
         $erros['leitor_id'] = 'Selecione um leitor.';
-    } elseif (filter_var($form['leitor_id'], FILTER_VALIDATE_INT) === false || buscarLeitor((int) $form['leitor_id']) === null) {
+    } elseif (filter_var($form['leitor_id'], FILTER_VALIDATE_INT) === false || Leitor::buscarPorId((int) $form['leitor_id']) === null) {
         $erros['leitor_id'] = 'Leitor inválido.';
     }
 
     $data = converterData($form['data_prevista']);
     $hoje = new DateTime('today');
-    $limite = new DateTime('today +' . PRAZO_MAXIMO_DIAS . ' days');
+    $limite = new DateTime('today +' . Emprestimo::PRAZO_MAXIMO_DIAS . ' days');
 
     if ($form['data_prevista'] === '') {
         $erros['data_prevista'] = 'Informe a data prevista de devolução.';
     } elseif ($data === null) {
         $erros['data_prevista'] = 'Data inválida.Use o formato DD/MM/AAAA (ex: 05/10/2026)';
     } elseif ($data > $limite) {
-        $erros['data_prevista'] = 'O prazo máximo é de ' .PRAZO_MAXIMO_DIAS . ' dias (até ' . $limite->format('d/m/Y') .').';
+        $erros['data_prevista'] = 'O prazo máximo é de ' .Emprestimo::PRAZO_MAXIMO_DIAS . ' dias (até ' . $limite->format('d/m/Y') .').';
     }
 
     return $erros;
@@ -60,18 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
 
     if (empty($erros)) {
         try {
-            registrarEmprestimo((int) $form['livro_id'], (int) $form['leitor_id'], converterData($form['data_prevista']));
+            Emprestimo::registrar((int) $form['livro_id'], (int) $form['leitor_id'], converterData($form['data_prevista']));
             definirMensagem('sucesso', 'Empréstimo registrado com sucesso!');
             redirecionar('emprestimos.controllers.php');
         } catch (Exception $e) {
-            
             $erros['geral'] = $e->getMessage();
         }
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'devolver') {
     try {
-        $emprestimo = registrarDevolucao((int) campoPost('id'));
-        $atraso = diasDeAtraso($emprestimo);
+        $emprestimoObj = Emprestimo::registrarDevolucao((int) campoPost('id'));
+        $atraso = $emprestimoObj->getDiasAtraso();
 
         if ($atraso > 0) {
             definirMensagem('sucesso', "Devolução registrada, com $atraso dia(s) de atraso.");
@@ -84,9 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
     redirecionar("emprestimos.controllers.php?filtro=$filtro");
 }
 
-$livrosDisponiveis = listarLivrosDisponiveis();
-$leitores = listarLeitores();
-$emprestimos = listarEmprestimos($filtro);
+$livrosDisponiveis = [];
+    foreach (Livro::listarTodos() as $l) {
+        if ($l->estaDisponivel()) $livrosDisponiveis[] = $l;
+    }
+
+$leitores = Leitor::listarTodos();
+$emprestimos = Emprestimo::listarEmprestimos($filtro);
 $mensagem = pegarMensagem();
 
 require __DIR__ . '/../views/cabecalho.view.php';

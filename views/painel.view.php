@@ -36,11 +36,11 @@
             <?php if (!empty($atrasados)): ?>
                 <?php foreach ($atrasados as $emprestimo): ?>
                     <tr>
-                        <td><?= e($emprestimo['livro_titulo']) ?></td>
-                        <td><?= e($emprestimo['leitor_nome']) ?></td>
-                        <td><?= e(formatarTelefone($emprestimo['leitor_telefone'])) ?></td>
-                        <td><?= formatarData($emprestimo['data_prevista']) ?></td>
-                        <td><span class="etiqueta atrasado"><?= $emprestimo['dias_atraso'] ?> dia(s)</span></td>
+                        <td><?= e($emprestimo->getLivroTitulo()) ?></td>
+                        <td><?= e($emprestimo->getLeitorNome()) ?></td>
+                        <td><?= e(formatarTelefone($emprestimo->getLeitorTelefone())) ?></td>
+                        <td><?= formatarData($emprestimo->getDataPrevista()) ?></td>
+                        <td><span class="etiqueta atrasado"><?= $emprestimo->getDiasAtraso() ?> dia(s)</span></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

@@ -55,7 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
 
     if (empty($erros)) {
         try {
-            salvarLivro($form);
+            $livroObj = new Livro();
+            if (!empty($form['id'])) { $livroObj->setId($form['id']); }
+            $livroObj->setTitulo($form['titulo']);
+            $livroObj->setAutor($form['autor']);
+            $livroObj->setAno($form['ano']);
+            $livroObj->salvar();
             definirMensagem('sucesso', $form['id'] === '' ? 'Livro cadastrado com sucesso!' : 'Livro atualizado com sucesso!');
             redirecionar('livros.controllers.php');
         } catch (Exception $e) {
@@ -64,24 +69,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'excluir') {
     try {
-        excluirLivro((int) campoPost('id'));
+        Livro::excluir((int) campoPost('id'));
         definirMensagem('sucesso', 'Livro excluído com sucesso!');
     } catch (Exception $e) {
         definirMensagem('erro', $e->getMessage());
     }
     redirecionar('livros.controllers.php');
 } elseif ($acao === 'editar') {
-    $livro = buscarLivro((int) ($_GET['id'] ?? 0));
-
-    if ($livro === null) {
+    $livroObj = Livro::buscarPorId((int) ($_GET['id'] ?? 0));
+    
+    if ($livroObj === null) {
         definirMensagem('erro', 'Livro não encontrado.');
         redirecionar('livros.controllers.php');
     }
-    $form = $livro;
+    
+    $form = [
+        'id' => $livroObj->getId(),
+        'titulo' => $livroObj->getTitulo(),
+        'autor' => $livroObj->getAutor(),
+        'ano' => $livroObj->getAno()
+    ];
 }
 
 $editando = !empty($form['id']);
-$livros = listarLivros();
+$livros = Livro::listarTodos();
 $mensagem = pegarMensagem();
 
 require __DIR__ . '/../views/cabecalho.view.php';

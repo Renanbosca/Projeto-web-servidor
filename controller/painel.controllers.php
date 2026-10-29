@@ -2,17 +2,27 @@
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/funcoes.php';
+require_once __DIR__ . '/../models/livro.models.php';
+require_once __DIR__ . '/../models/leitor.models.php';
 require_once __DIR__ . '/../models/emprestimo.models.php';
-
 
 $titulo = 'Painel - Biblioteca';
 $menuAtivo = 'painel';
 
-$totalLivros = count(listarLivros());
-$totalDisponiveis = count(listarLivrosDisponiveis());
-$totalLeitores = count(listarLeitores());
-$totalAtivos = count(listarEmprestimos('ativos'));
-$atrasados = listarEmprestimos('atrasados');
+$todosLivros = Livro::listarTodos();
+$totalLivros = count($todosLivros);
+
+$totalDisponiveis = 0;
+foreach ($todosLivros as $livro) {
+    if ($livro->estaDisponivel()) {
+        $totalDisponiveis++;
+    }
+}
+
+
+$totalLeitores = count(Leitor::listarTodos());
+$totalAtivos = count(Emprestimo::listarEmprestimos('ativos'));
+$atrasados = Emprestimo::listarEmprestimos('atrasados');
 
 $mensagem = pegarMensagem();
 

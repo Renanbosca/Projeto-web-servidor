@@ -42,32 +42,34 @@
                 <th>Ações</th>
             </tr>
         </thead>
-        <tbody>
-            <?php if (!empty($livros)): ?>
-                <?php foreach ($livros as $livro): ?>
-                    <tr>
-                        <td><?= e($livro['titulo']) ?></td>
-                        <td><?= e($livro['autor']) ?></td>
-                        <td><?= e($livro['ano']) ?></td>
-                        <td>
-                            <?php if ($livro['disponivel']): ?>
-                                <span class="etiqueta disponivel">Disponível</span>
-                            <?php else: ?>
-                                <span class="etiqueta emprestado">Emprestado</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="acoes">
-                            <a href="livros.controllers.php?acao=editar&id=<?= $livro['id'] ?>" class="botao-pequeno">Editar</a>
-                            <form action="livros.controllers.php?acao=excluir" method="POST" onsubmit="return confirm('Deseja excluir este livro?');">
-                                <input type="hidden" name="id" value="<?= $livro['id'] ?>">
-                                <button type="submit" class="botao-pequeno perigo">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr><td colspan="5">Nenhum livro cadastrado.</td></tr>
-            <?php endif; ?>
-        </tbody>
+<tbody>
+        <?php if (!empty($livros)): ?>
+            <?php foreach ($livros as $livro): ?>
+                <tr>
+                    <td><?= e($livro->getTitulo()) ?></td>
+                    <td><?= e($livro->getAutor()) ?></td>
+                    <td><?= e($livro->getAno()) ?></td>
+                    
+                    <td>
+                        <?php if ($livro->estaDisponivel()): ?>
+                            <span class="etiqueta disponivel">Disponível</span>
+                        <?php else: ?>
+                            <span class="etiqueta emprestado">Emprestado</span>
+                        <?php endif; ?>
+                    </td>
+                    
+                    <td class="acoes">
+                        <a href="livros.controllers.php?acao=editar&id=<?= $livro->getId() ?>" class="botao-pequeno">Editar</a>
+                        <form action="livros.controllers.php?acao=excluir" method="POST" onsubmit="return confirm('Deseja excluir este livro?');">
+                            <input type="hidden" name="id" value="<?= $livro->getId() ?>">
+                            <button type="submit" class="botao-pequeno perigo">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr><td colspan="5">Nenhum livro cadastrado.</td></tr>
+        <?php endif; ?>
+</tbody>
     </table>
 </div>

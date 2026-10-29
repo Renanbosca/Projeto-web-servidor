@@ -46,14 +46,14 @@
             <?php if (!empty($leitores)): ?>
                 <?php foreach ($leitores as $leitor): ?>
                     <tr>
-                        <td><?= e($leitor['nome']) ?></td>
-                        <td><?= e($leitor['email']) ?></td>
-                        <td><?= e(formatarTelefone($leitor['telefone'])) ?></td>
-                        <td><?= $leitor['emprestimos_ativos'] ?></td>
+                        <td><?= e($leitor->getNome()) ?></td>
+                        <td><?= e($leitor->getEmail()) ?></td>
+                        <td><?= e(formatarTelefone($leitor->getTelefone())) ?></td>
+                        <td><?= $leitor->getEmprestimosAtivos() ?></td>
                         <td class="acoes">
-                            <a href="leitores.controllers.php?acao=editar&id=<?= $leitor['id'] ?>" class="botao-pequeno">Editar</a>
+                            <a href="leitores.controllers.php?acao=editar&id=<?= $leitor->getId() ?>" class="botao-pequeno">Editar</a>
                             <form action="leitores.controllers.php?acao=excluir" method="POST" onsubmit="return confirm('Deseja excluir este leitor?');">
-                                <input type="hidden" name="id" value="<?= $leitor['id'] ?>">
+                                <input type="hidden" name="id" value="<?= $leitor->getId() ?>">
                                 <button type="submit" class="botao-pequeno perigo">Excluir</button>
                             </form>
                         </td>

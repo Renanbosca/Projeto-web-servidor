@@ -28,15 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($erros)) {
         try {
-            $usuario = autenticarUsuario($email, $senha);
+            $usuario = Usuario::autenticarUsuario($email, $senha); 
 
             if ($usuario !== null) {
                 session_regenerate_id(true);
-
                 $_SESSION['logado'] = true;
-                $_SESSION['usuario_id'] = $usuario['id'];
-                $_SESSION['usuario_nome'] = $usuario['nome'];
-
+                $_SESSION['usuario_id'] = $usuario->getId(); 
+                $_SESSION['usuario_nome'] = $usuario->getNome(); 
                 redirecionar('painel.controllers.php');
             }
 

@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erros['email'] = 'Informe o e-mail.';
     } elseif (!filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
         $erros['email'] = 'Informe um e-mail válido (ex.: nome@dominio.com).';
-    } elseif (buscarUsuarioPorEmail($form['email']) !== null) {
+    } elseif (Usuario::buscarUsuarioPorEmail($form['email']) !== null) {
         $erros['email'] = 'Já existe uma conta com este e-mail.';
     }
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($erros)) {
         try {
-            cadastrarUsuario($form['nome'], $form['email'], $senha);
+            Usuario::cadastrarUsuario($form['nome'], $form['email'], $senha);
             definirMensagem('sucesso', 'Conta criada com sucesso! Faça login para continuar.');
             redirecionar('index.controllers.php');
         } catch (Exception $e) {
