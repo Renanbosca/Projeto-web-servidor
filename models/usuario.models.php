@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/armazenamento.php';
+require_once __DIR__ . '/armazenamento.models.php';
 
 function buscarUsuarioPorEmail(string $email): ?array
 {

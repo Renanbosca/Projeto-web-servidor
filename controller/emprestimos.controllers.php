@@ -1,8 +1,9 @@
 <?php
 
-require_once 'includes/auth.php';
-require_once 'includes/funcoes.php';
-require_once 'models/emprestimo.php'; 
+
+require_once __DIR__ . '/../models/emprestimo.models.php';
+require_once __DIR__ . '/../includes/funcoes.php';
+require_once __DIR__ . '/../includes/auth.php';
 
 function validarEmprestimo(array $form): array
 {
@@ -61,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
         try {
             registrarEmprestimo((int) $form['livro_id'], (int) $form['leitor_id'], converterData($form['data_prevista']));
             definirMensagem('sucesso', 'Empréstimo registrado com sucesso!');
-            redirecionar('emprestimos.php');
+            redirecionar('emprestimos.controllers.php');
         } catch (Exception $e) {
             
             $erros['geral'] = $e->getMessage();
@@ -80,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
     } catch (Exception $e) {
         definirMensagem('erro', $e->getMessage());
     }
-    redirecionar("emprestimos.php?filtro=$filtro");
+    redirecionar("emprestimos.controllers.php?filtro=$filtro");
 }
 
 $livrosDisponiveis = listarLivrosDisponiveis();
@@ -88,6 +89,6 @@ $leitores = listarLeitores();
 $emprestimos = listarEmprestimos($filtro);
 $mensagem = pegarMensagem();
 
-require 'views/cabecalho.view.php';
-require 'views/emprestimos_cadastro.view.php';
-require 'views/rodape.view.php';
+require __DIR__ . '/../views/cabecalho.view.php';
+require __DIR__ . '/../views/emprestimos_cadastro.view.php';
+require __DIR__ . '/../views/rodape.view.php';

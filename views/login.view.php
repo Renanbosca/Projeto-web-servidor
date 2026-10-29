@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= e($titulo) ?></title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="body-login">
     <div class="login-box">
@@ -18,7 +18,7 @@
             <div class="erro"><?= e($erros['geral']) ?></div>
         <?php endif; ?>
 
-        <form action="index.php" method="POST" novalidate>
+        <form action="index.controllers.php" method="POST" novalidate>
             <div class="form-group">
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" value="<?= e($email) ?>" class="<?= classeErro($erros, 'email') ?>">
@@ -35,6 +35,6 @@
         </form>
 
         <p class="link-rodape">
-            Ainda não tem conta? <a href="cadastro_usuario.php">Cadastre-se</a>
+            Ainda não tem conta? <a href="cadastro_usuario.controllers.php">Cadastre-se</a>
         </p>
 

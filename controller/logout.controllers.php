@@ -5,5 +5,5 @@ session_start();
 $_SESSION = [];     
 session_destroy();  
 
-header('Location: index.php?saiu=1');
+header('Location: index.models.php?saiu=1');
 exit;

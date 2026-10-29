@@ -1,8 +1,9 @@
 <?php
 
-require_once 'includes/auth.php';
-require_once 'includes/funcoes.php';
-require_once 'models/leitor.php';
+
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/funcoes.php';
+require_once __DIR__ . '/../models/leitor.models.php';
 
 function validarLeitor(array $form): array
 {
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
         try {
             salvarLeitor($form);
             definirMensagem('sucesso', $form['id'] === '' ? 'Leitor cadastrado com sucesso!' : 'Leitor atualizado com sucesso!');
-            redirecionar('leitores.php');
+            redirecionar('leitores.controllers.php');
         } catch (Exception $e) {
             $erros['geral'] = $e->getMessage();
         }
@@ -69,13 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
     } catch (Exception $e) {
         definirMensagem('erro', $e->getMessage());
     }
-    redirecionar('leitores.php');
+    redirecionar('leitores.controllers.php');
 } elseif ($acao === 'editar') {
     $leitor = buscarLeitor((int) ($_GET['id'] ?? 0));
 
     if ($leitor === null) {
         definirMensagem('erro', 'Leitor não encontrado.');
-        redirecionar('leitores.php');
+        redirecionar('leitores.controllers.php');
     }
     $form = $leitor;
     $form['telefone'] = formatarTelefone($leitor['telefone']);
@@ -85,6 +86,6 @@ $editando = !empty($form['id']);
 $leitores = listarLeitores();
 $mensagem = pegarMensagem();
 
-require 'views/cabecalho.view.php';
-require 'views/leitores_cadastro.view.php';
-require 'views/rodape.view.php';
+require __DIR__ . '/../views/cabecalho.view.php';
+require __DIR__ . '/../views/leitores_cadastro.view.php';
+require __DIR__ . '/../views/rodape.view.php';

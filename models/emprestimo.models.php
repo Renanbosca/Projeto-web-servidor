@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/armazenamento.php';
-require_once __DIR__ . '/livro.php';
-require_once __DIR__ . '/leitor.php';
+require_once __DIR__ . '/armazenamento.models.php';
+require_once __DIR__ . '/livro.models.php';
+require_once __DIR__ . '/leitor.models.php';
 
 const LIMITE_EMPRESTIMOS_POR_LEITOR = 3;
 const PRAZO_MAXIMO_DIAS = 30;

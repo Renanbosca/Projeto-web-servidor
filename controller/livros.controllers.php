@@ -1,8 +1,8 @@
 <?php
 
-require_once 'includes/auth.php';
-require_once 'includes/funcoes.php';
-require_once 'models/livro.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/funcoes.php';
+require_once __DIR__ . '/../models/livro.models.php';
 
 
 function validarLivro(array $form): array
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
         try {
             salvarLivro($form);
             definirMensagem('sucesso', $form['id'] === '' ? 'Livro cadastrado com sucesso!' : 'Livro atualizado com sucesso!');
-            redirecionar('livros.php');
+            redirecionar('livros.controllers.php');
         } catch (Exception $e) {
             $erros['geral'] = $e->getMessage();
         }
@@ -69,13 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
     } catch (Exception $e) {
         definirMensagem('erro', $e->getMessage());
     }
-    redirecionar('livros.php');
+    redirecionar('livros.controllers.php');
 } elseif ($acao === 'editar') {
     $livro = buscarLivro((int) ($_GET['id'] ?? 0));
 
     if ($livro === null) {
         definirMensagem('erro', 'Livro não encontrado.');
-        redirecionar('livros.php');
+        redirecionar('livros.controllers.php');
     }
     $form = $livro;
 }
@@ -84,6 +84,6 @@ $editando = !empty($form['id']);
 $livros = listarLivros();
 $mensagem = pegarMensagem();
 
-require 'views/cabecalho.view.php';
-require 'views/livros_cadastro.view.php';
-require 'views/rodape.view.php';
+require __DIR__ . '/../views/cabecalho.view.php';
+require __DIR__ . '/../views/livros_cadastro.view.php';
+require __DIR__ . '/../views/rodape.view.php';

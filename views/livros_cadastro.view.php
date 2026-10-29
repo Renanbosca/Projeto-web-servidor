@@ -5,7 +5,7 @@
 <?php endif; ?>
 
 
-<form action="livros.php?acao=salvar" method="POST" novalidate>
+<form action="livros.controllers.php?acao=salvar" method="POST" novalidate>
     <input type="hidden" name="id" value="<?= e($form['id']) ?>">
 
     <div class="form-group">
@@ -25,7 +25,7 @@
     </div>
     <button type="submit"><?= $editando ? 'Salvar Alterações' : 'Salvar Livro' ?></button>
     <?php if ($editando): ?>
-        <a href="livros.php" class="botao-secundario">Cancelar</a>
+        <a href="livros.controllers.php" class="botao-secundario">Cancelar</a>
     <?php endif; ?>
 </form>
 
@@ -57,8 +57,8 @@
                             <?php endif; ?>
                         </td>
                         <td class="acoes">
-                            <a href="livros.php?acao=editar&id=<?= $livro['id'] ?>" class="botao-pequeno">Editar</a>
-                            <form action="livros.php?acao=excluir" method="POST" onsubmit="return confirm('Deseja excluir este livro?');">
+                            <a href="livros.controllers.php?acao=editar&id=<?= $livro['id'] ?>" class="botao-pequeno">Editar</a>
+                            <form action="livros.controllers.php?acao=excluir" method="POST" onsubmit="return confirm('Deseja excluir este livro?');">
                                 <input type="hidden" name="id" value="<?= $livro['id'] ?>">
                                 <button type="submit" class="botao-pequeno perigo">Excluir</button>
                             </form>

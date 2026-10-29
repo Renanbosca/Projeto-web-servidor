@@ -4,7 +4,7 @@
     <div class="erro"><?= e($erros['geral'] ?? 'Não foi possível registrar. Corrija os campos destacados.') ?></div>
 <?php endif; ?>
 
-<form action="emprestimos.php?acao=salvar" method="POST" novalidate>
+<form action="emprestimos.controllers.php?acao=salvar" method="POST" novalidate>
     <div class="form-group">
         <label for="livro_id">Livro:</label>
         <select id="livro_id" name="livro_id" class="<?= classeErro($erros, 'livro_id') ?>">
@@ -16,7 +16,7 @@
             <?php endforeach; ?>
         </select>
         <?php if (empty($livrosDisponiveis)): ?>
-            <span class="dica">Nenhum livro disponível no momento. <a href="livros.php">Cadastrar livro</a></span>
+            <span class="dica">Nenhum livro disponível no momento. <a href="livros.controllers.php">Cadastrar livro</a></span>
         <?php endif; ?>
         <?= mensagemErro($erros, 'livro_id') ?>
     </div>
@@ -32,7 +32,7 @@
             <?php endforeach; ?>
         </select>
         <?php if (empty($leitores)): ?>
-            <span class="dica">Nenhum leitor cadastrado. <a href="leitores.php">Cadastrar leitor</a></span>
+            <span class="dica">Nenhum leitor cadastrado. <a href="leitores.controllers.php">Cadastrar leitor</a></span>
         <?php endif; ?>
         <?= mensagemErro($erros, 'leitor_id') ?>
     </div>
@@ -53,7 +53,7 @@
 
 <nav class="filtros">
     <?php foreach ($filtros as $chave => $nome): ?>
-        <a href="emprestimos.php?filtro=<?= $chave ?>" class="<?= $chave === $filtro ? 'ativo' : '' ?>"><?= $nome ?></a>
+        <a href="emprestimos.controllers.php?filtro=<?= $chave ?>" class="<?= $chave === $filtro ? 'ativo' : '' ?>"><?= $nome ?></a>
     <?php endforeach; ?>
 </nav>
 
@@ -88,7 +88,7 @@
                         </td>
                         <td class="acoes">
                             <?php if ($emprestimo['status'] !== 'devolvido'): ?>
-                                <form action="emprestimos.php?acao=devolver&filtro=<?= $filtro ?>" method="POST" onsubmit="return confirm('Confirmar a devolução deste livro?');">
+                                <form action="emprestimos.controllers.php?acao=devolver&filtro=<?= $filtro ?>" method="POST" onsubmit="return confirm('Confirmar a devolução deste livro?');">
                                     <input type="hidden" name="id" value="<?= $emprestimo['id'] ?>">
                                     <button type="submit" class="botao-pequeno">Registrar devolução</button>
                                 </form>

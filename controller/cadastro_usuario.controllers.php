@@ -1,11 +1,11 @@
 <?php
 
 session_start();
-require_once 'includes/funcoes.php';
-require_once 'models/usuario.php';
+require __DIR__ . '/../models/usuario.models.php';
+require __DIR__ . '/../includes/funcoes.php';
 
 if (isset($_SESSION['logado']) && $_SESSION['logado'] === true) {
-    redirecionar('painel.php');
+    redirecionar('painel.controllers.php');
 }
 
 $titulo = 'Criar Conta - Biblioteca';
@@ -48,11 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             cadastrarUsuario($form['nome'], $form['email'], $senha);
             definirMensagem('sucesso', 'Conta criada com sucesso! Faça login para continuar.');
-            redirecionar('index.php');
+            redirecionar('index.controllers.php');
         } catch (Exception $e) {
             $erros['geral'] = $e->getMessage();
         }
     }
 }
 
-require 'views/usuario_cadastro.view.php';
+
+require __DIR__ . '/../views/usuario_cadastro.view.php';
