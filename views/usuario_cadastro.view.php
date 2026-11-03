@@ -14,7 +14,7 @@
             <div class="erro"><?= e($erros['geral']) ?></div>
         <?php endif; ?>
 
-        <form action="cadastro_usuario.controllers.php" method="POST" novalidate>
+        <form action="/cadastro" method="POST" novalidate>
             <div class="form-group">
                 <label for="nome">Nome Completo:</label>
                 <input type="text" id="nome" name="nome" value="<?= e($form['nome']) ?>" class="<?= classeErro($erros, 'nome') ?>">
@@ -44,6 +44,6 @@
         </form>
 
         <p class="link-rodape">
-            Já tem uma conta? <a href="index.controllers.php">Fazer Login</a>
+            Já tem uma conta? <a href="/login">Fazer Login</a>
         </p>
 

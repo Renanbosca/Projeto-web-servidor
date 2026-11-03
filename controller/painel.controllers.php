@@ -2,9 +2,7 @@
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/funcoes.php';
-require_once __DIR__ . '/../models/livro.models.php';
-require_once __DIR__ . '/../models/leitor.models.php';
-require_once __DIR__ . '/../models/emprestimo.models.php';
+
 
 $titulo = 'Painel - Biblioteca';
 $menuAtivo = 'painel';

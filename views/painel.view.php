@@ -1,20 +1,20 @@
 <h2>Painel da Biblioteca</h2>
 
 <div class="cartoes">
-    <a class="cartao" href="livros.controllers.php">
+    <a class="cartao" href="/livros">
         <span class="numero"><?= $totalLivros ?></span>
         <span class="rotulo">Livros cadastrados</span>
         <span class="detalhe"><?= $totalDisponiveis ?> disponíveis</span>
     </a>
-    <a class="cartao" href="leitores.controllers.php">
+    <a class="cartao" href="/leitores">
         <span class="numero"><?= $totalLeitores ?></span>
         <span class="rotulo">Leitores</span>
     </a>
-    <a class="cartao" href="emprestimos.controllers.php?filtro=ativos">
+    <a class="cartao" href="/emprestimos?filtro=ativos">
         <span class="numero"><?= $totalAtivos ?></span>
         <span class="rotulo">Empréstimos ativos</span>
     </a>
-    <a class="cartao <?= count($atrasados) > 0 ? 'cartao-alerta' : '' ?>" href="emprestimos.controllers.php?filtro=atrasados">
+    <a class="cartao <?= count($atrasados) > 0 ? 'cartao-alerta' : '' ?>" href="/emprestimos?filtro=atrasados">
         <span class="numero"><?= count($atrasados) ?></span>
         <span class="rotulo">Em atraso</span>
     </a>

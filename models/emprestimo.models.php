@@ -1,8 +1,5 @@
 <?php
-require_once __DIR__ . '/bd.models.php';
-require_once __DIR__ . '/crudpadrao.models.php';
-require_once __DIR__ . '/livro.models.php';
-require_once __DIR__ . '/leitor.models.php';
+
 
 class Emprestimo implements CrudPadrao {
     const LIMITE_EMPRESTIMOS_POR_LEITOR = 3;

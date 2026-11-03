@@ -1,0 +1,13 @@
+{
+    "name": "renanbosca/biblioteca",
+    "description": "Sistema de Biblioteca MVC com Rotas",
+    "require": {
+        "nesbot/carbon": "^3.0"
+    },
+    "autoload": {
+        "classmap": [
+            "models/",
+            "includes/funcoes.php"
+        ]
+    }
+}

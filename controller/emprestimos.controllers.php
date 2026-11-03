@@ -1,7 +1,7 @@
 <?php
 
 
-require_once __DIR__ . '/../models/emprestimo.models.php';
+
 require_once __DIR__ . '/../includes/funcoes.php';
 require_once __DIR__ . '/../includes/auth.php';
 
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
         try {
             Emprestimo::registrar((int) $form['livro_id'], (int) $form['leitor_id'], converterData($form['data_prevista']));
             definirMensagem('sucesso', 'Empréstimo registrado com sucesso!');
-            redirecionar('emprestimos.controllers.php');
+            redirecionar('/emprestimos');
         } catch (Exception $e) {
             $erros['geral'] = $e->getMessage();
         }
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
     } catch (Exception $e) {
         definirMensagem('erro', $e->getMessage());
     }
-    redirecionar("emprestimos.controllers.php?filtro=$filtro");
+    redirecionar("/emprestimos?filtro=$filtro");
 }
 
 $livrosDisponiveis = [];

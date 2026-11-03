@@ -2,10 +2,10 @@
 
 session_start();
 require_once __DIR__ . '/../includes/funcoes.php';
-require_once __DIR__ . '/../models/usuario.models.php';
+
 
 if (isset($_SESSION['logado']) && $_SESSION['logado'] === true) {
-    redirecionar('painel.controllers.php');
+    redirecionar('/painel');
 }
 
 $titulo = 'Login - Biblioteca';
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['logado'] = true;
                 $_SESSION['usuario_id'] = $usuario->getId(); 
                 $_SESSION['usuario_nome'] = $usuario->getNome(); 
-                redirecionar('painel.controllers.php');
+                redirecionar('/painel');
             }
 
             $erros['geral'] = 'E-mail ou senha incorretos.';

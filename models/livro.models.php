@@ -1,6 +1,5 @@
 <?php
-require_once __DIR__ . '/bd.models.php';
-require_once __DIR__ . '/crudpadrao.models.php';
+
 
 class Livro implements CrudPadrao {
     private $id;

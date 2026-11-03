@@ -8,13 +8,13 @@
 </head>
 <body>
     <nav class="menu">
-        <a href="painel.controllers.php" class="<?= $menuAtivo === 'painel' ? 'ativo' : '' ?>">Início</a>
-        <a href="livros.controllers.php" class="<?= $menuAtivo === 'livros' ? 'ativo' : '' ?>">Livros</a>
-        <a href="leitores.controllers.php" class="<?= $menuAtivo === 'leitores' ? 'ativo' : '' ?>">Leitores</a>
-        <a href="emprestimos.controllers.php" class="<?= $menuAtivo === 'emprestimos' ? 'ativo' : '' ?>">Empréstimos</a>
+        <a href="/painel" class="<?= $menuAtivo === 'painel' ? 'ativo' : '' ?>">Início</a>
+        <a href="/livros" class="<?= $menuAtivo === 'livros' ? 'ativo' : '' ?>">Livros</a>
+        <a href="/leitores" class="<?= $menuAtivo === 'leitores' ? 'ativo' : '' ?>">Leitores</a>
+        <a href="/emprestimos" class="<?= $menuAtivo === 'emprestimos' ? 'ativo' : '' ?>">Empréstimos</a>
 
         <span class="usuario-logado">Olá, <?= e($usuarioLogado) ?></span>
-        <a href="logout.controllers.php">Sair</a>
+        <a href="/sair">Sair</a>
     </nav>
     <div class="container">
         <?php if (!empty($mensagem)): ?>

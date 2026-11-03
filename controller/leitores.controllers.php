@@ -3,7 +3,7 @@
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/funcoes.php';
-require_once __DIR__ . '/../models/leitor.models.php';
+
 
 function validarLeitor(array $form): array
 {
@@ -64,7 +64,7 @@ $form = ['id' => '', 'nome' => '', 'email' => '', 'telefone' => ''];
                 $leitorObj->salvar();
                 
                 definirMensagem('sucesso', $form['id'] === '' ? 'Leitor cadastrado com sucesso!' : 'Leitor atualizado com sucesso!');
-                redirecionar('leitores.controllers.php');
+                redirecionar('/leitores');
             } catch (Exception $e) {
                 $erros['geral'] = "Erro na conexão com o banco de dados: " . $e->getMessage();
             }
@@ -76,13 +76,13 @@ $form = ['id' => '', 'nome' => '', 'email' => '', 'telefone' => ''];
         } catch (Exception $e) {
             definirMensagem('erro', "Não é possível excluir: o leitor tem empréstimos ativos.");
         }
-        redirecionar('leitores.controllers.php');
+        redirecionar('/leitores');
     } elseif ($acao === 'editar') {
         $leitorObj = Leitor::buscarPorId((int) ($_GET['id'] ?? 0));
 
         if ($leitorObj === null) {
             definirMensagem('erro', 'Leitor não encontrado.');
-            redirecionar('leitores.controllers.php');
+            redirecionar('/leitores');
         }
         
         $form = [

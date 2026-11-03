@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/funcoes.php';
-require_once __DIR__ . '/../models/livro.models.php';
 
 
 function validarLivro(array $form): array
@@ -62,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
             $livroObj->setAno($form['ano']);
             $livroObj->salvar();
             definirMensagem('sucesso', $form['id'] === '' ? 'Livro cadastrado com sucesso!' : 'Livro atualizado com sucesso!');
-            redirecionar('livros.controllers.php');
+            redirecionar('/livros');
         } catch (Exception $e) {
             $erros['geral'] = $e->getMessage();
         }
@@ -74,13 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $acao === 'salvar') {
     } catch (Exception $e) {
         definirMensagem('erro', $e->getMessage());
     }
-    redirecionar('livros.controllers.php');
+    redirecionar('/livros');
 } elseif ($acao === 'editar') {
     $livroObj = Livro::buscarPorId((int) ($_GET['id'] ?? 0));
     
     if ($livroObj === null) {
         definirMensagem('erro', 'Livro não encontrado.');
-        redirecionar('livros.controllers.php');
+        redirecionar('/livros');
     }
     
     $form = [
